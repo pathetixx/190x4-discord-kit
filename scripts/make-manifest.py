@@ -6,8 +6,8 @@ import hashlib, json, pathlib, urllib.request
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 ITEMS = [
-    dict(id="theme-190x4", kind="theme", name="190x4", file="190x4.theme.css", version="4.1.0",
-         url="https://github.com/pathetixx/190x4-bd-theme/releases/download/theme-v4.1.0/190x4.theme.css"),
+    dict(id="theme-190x4", kind="theme", name="190x4", file="190x4.theme.css", version="4.1.1",
+         url="https://github.com/pathetixx/190x4-bd-theme/releases/download/theme-v4.1.1/190x4.theme.css"),
     dict(id="plugin-companion", kind="plugin", name="190x4Companion", file="190x4Companion.plugin.js", version="2.4.0",
          url="https://github.com/pathetixx/190x4-bd-theme/releases/download/theme-v4.1.0/190x4Companion.plugin.js"),
     dict(id="plugin-regionswitcher", kind="plugin", name="RegionSwitcher", file="RegionSwitcher.plugin.js", version="4.2.1",
