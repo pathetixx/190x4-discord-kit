@@ -1,0 +1,45 @@
+{
+  "schema": 1,
+  "items": [
+    {
+      "id": "theme-190x4",
+      "kind": "theme",
+      "name": "190x4",
+      "file": "190x4.theme.css",
+      "version": "4.0.0",
+      "url": "https://github.com/pathetixx/190x4-bd-theme/releases/download/theme-v4.0.0/190x4.theme.css",
+      "sha256": "21d0125279ceb29f2c6788ccf45ed56812a849eaeb5993361f974912aac83113",
+      "size": 167410
+    },
+    {
+      "id": "plugin-companion",
+      "kind": "plugin",
+      "name": "190x4Companion",
+      "file": "190x4Companion.plugin.js",
+      "version": "2.0.0",
+      "url": "https://github.com/pathetixx/190x4-bd-theme/releases/download/theme-v4.0.0/190x4Companion.plugin.js",
+      "sha256": "c53f1a33b8b8dc825155ae22fc803f7380c42a7fbb8cdef4f914858f7731d54d",
+      "size": 8999
+    },
+    {
+      "id": "plugin-regionswitcher",
+      "kind": "plugin",
+      "name": "RegionSwitcher",
+      "file": "RegionSwitcher.plugin.js",
+      "version": "4.2.1",
+      "url": "https://raw.githubusercontent.com/pathetixx/190x4-regionswitcher/687ceb16e7c1de209134a3d3a77c4d7cd977209d/RegionSwitcher.plugin.js",
+      "sha256": "d8bdee623a46d87cd590fc34db3867a5e6d6a969432e87712bfbc4d76fc1cfcf",
+      "size": 43766
+    },
+    {
+      "id": "plugin-showping",
+      "kind": "plugin",
+      "name": "ShowPing",
+      "file": "ShowPing.plugin.js",
+      "version": "2.6.13-190x4.1",
+      "url": "https://raw.githubusercontent.com/pathetixx/190x4-discord-kit/main/vendor/ShowPing/ShowPing.plugin.js",
+      "sha256": "e3f6acc881afd258c69df4ea0315d89327e8c48e66343f8062b46bae182f7025",
+      "size": 9078
+    }
+  ]
+}

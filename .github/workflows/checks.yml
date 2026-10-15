@@ -1,0 +1,47 @@
+name: checks
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  rust:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          components: clippy, rustfmt
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: src-tauri
+      - name: Format
+        run: cargo fmt --manifest-path src-tauri/Cargo.toml -- --check
+      - name: Clippy
+        run: cargo clippy --manifest-path src-tauri/Cargo.toml --all-targets -- -D warnings
+      - name: Test
+        run: cargo test --manifest-path src-tauri/Cargo.toml
+
+  manifest:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify content manifest hashes
+        run: |
+          python3 - <<'PY'
+          import hashlib, json, pathlib, urllib.request
+          m = json.loads(pathlib.Path("content/manifest.json").read_text(encoding="utf-8"))
+          bad = 0
+          for it in m["items"]:
+              local = "/main/" in it["url"] and "190x4-discord-kit" in it["url"]
+              data = pathlib.Path(it["url"].split("/main/", 1)[1]).read_bytes() if local else \
+                  urllib.request.urlopen(urllib.request.Request(it["url"], headers={"User-Agent": "ci"}), timeout=60).read()
+              ok = hashlib.sha256(data).hexdigest() == it["sha256"]
+              print(("ok  " if ok else "BAD ") + it["id"])
+              bad += not ok
+          raise SystemExit(bad)
+          PY

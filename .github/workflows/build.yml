@@ -1,0 +1,73 @@
+name: build
+
+# Релиз по тегу vX.Y.Z: NSIS-установщик + подпись апдейтера + latest.json (OTA).
+on:
+  push:
+    tags: ['v*']
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: src-tauri
+
+      - name: Tag matches app version
+        shell: pwsh
+        run: |
+          $v = (Get-Content src-tauri/tauri.conf.json -Raw | ConvertFrom-Json).version
+          if ("v$v" -ne "${{ github.ref_name }}") { Write-Error "tag ${{ github.ref_name }} != tauri.conf version $v"; exit 1 }
+
+      - run: npm install --no-audit --no-fund
+
+      - name: Build
+        run: npx tauri build
+        env:
+          TAURI_SIGNING_PRIVATE_KEY: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}
+          TAURI_SIGNING_PRIVATE_KEY_PASSWORD: ""
+
+      - name: Collect artifacts and latest.json
+        shell: pwsh
+        run: |
+          $v = (Get-Content src-tauri/tauri.conf.json -Raw | ConvertFrom-Json).version
+          $tag = "${{ github.ref_name }}"
+          $src = Get-ChildItem src-tauri/target/release/bundle/nsis/*-setup.exe | Select-Object -First 1
+          if (-not $src) { Write-Error "NSIS setup not found"; exit 1 }
+          # имя без пробелов: GitHub заменяет пробелы в именах ассетов, а URL в latest.json должен совпасть
+          $name = "190x4-Discord-Kit_${v}_x64-setup.exe"
+          New-Item -ItemType Directory -Force out | Out-Null
+          Copy-Item $src.FullName "out/$name"
+          Copy-Item "$($src.FullName).sig" "out/$name.sig"
+          $notes = (git tag -l $tag --format='%(contents)' | Out-String).Trim()
+          if ([string]::IsNullOrWhiteSpace($notes)) { $notes = "190x4 Discord Kit $tag" }
+          $json = [ordered]@{
+            version = $v
+            notes = $notes
+            pub_date = (Get-Date).ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ssZ")
+            platforms = [ordered]@{
+              "windows-x86_64" = [ordered]@{
+                signature = (Get-Content "out/$name.sig" -Raw).Trim()
+                url = "https://github.com/pathetixx/190x4-discord-kit/releases/download/$tag/$name"
+              }
+            }
+          }
+          $json | ConvertTo-Json -Depth 5 | Set-Content out/latest.json -Encoding utf8
+          Set-Content out/notes.md -Value $notes -Encoding utf8
+
+      - uses: softprops/action-gh-release@v2
+        with:
+          name: 190x4 Discord Kit ${{ github.ref_name }}
+          body_path: out/notes.md
+          files: |
+            out/*-setup.exe
+            out/*-setup.exe.sig
+            out/latest.json

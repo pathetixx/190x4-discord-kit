@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>190x4 Discord Kit</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="titlebar" data-tauri-drag-region>
+    <div class="brand" data-tauri-drag-region>
+      <span class="mark"><b>190</b><i>x4</i></span>
+      <span class="brand-name" data-tauri-drag-region>DISCORD KIT</span>
+    </div>
+    <div class="winbtns">
+      <button id="btn-min" class="winbtn" title="Свернуть" aria-label="Свернуть"><span class="ico ico-min"></span></button>
+      <button id="btn-close" class="winbtn close" title="Закрыть" aria-label="Закрыть"><span class="ico ico-close"></span></button>
+    </div>
+  </header>
+
+  <main class="layout">
+    <section class="island hero">
+      <p class="prompt">&gt; комплект_190x4</p>
+      <h1>Discord в стиле 190x4 —<br>в один клик</h1>
+      <p class="lead">BetterDiscord, тема 190x4 и плагины ставятся вместе и не слетают после обновлений Discord.</p>
+
+      <ul class="parts" id="parts">
+        <li data-part="discord"><span class="dot"></span><span class="pname">Discord</span><span class="pstate">проверяю…</span></li>
+        <li data-part="bd"><span class="dot"></span><span class="pname">BetterDiscord</span><span class="pstate">—</span></li>
+        <li data-part="theme"><span class="dot"></span><span class="pname">Тема 190x4</span><span class="pstate">—</span></li>
+        <li data-part="plugins"><span class="dot"></span><span class="pname">Плагины</span><span class="pstate">—</span></li>
+        <li data-part="guard"><span class="dot"></span><span class="pname">Защита от обновлений Discord</span><span class="pstate">—</span></li>
+      </ul>
+    </section>
+
+    <section class="island side">
+      <button id="btn-install" class="primary" disabled>УСТАНОВИТЬ ВСЁ</button>
+      <p class="hint" id="install-hint">Discord закроется и запустится заново.</p>
+      <button id="btn-restart" class="secondary">Перезапустить Discord</button>
+
+      <div class="term" id="term" aria-live="polite">
+        <div class="term-line muted">&gt; готов к работе</div>
+      </div>
+
+      <button id="btn-uninstall" class="danger-link">Удалить комплект</button>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <span id="ver" class="ver">v—</span>
+    <span id="update" class="update"></span>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
