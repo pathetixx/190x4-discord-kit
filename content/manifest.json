@@ -6,10 +6,10 @@
       "kind": "theme",
       "name": "190x4",
       "file": "190x4.theme.css",
-      "version": "4.1.1",
-      "url": "https://github.com/pathetixx/190x4-bd-theme/releases/download/theme-v4.1.1/190x4.theme.css",
-      "sha256": "c97e92c4149319f7ed1c46af55a4df3a4d97f3049ca70fa1ef6d6996c64b5e8c",
-      "size": 183416
+      "version": "4.1.2",
+      "url": "https://github.com/pathetixx/190x4-bd-theme/releases/download/theme-v4.1.2/190x4.theme.css",
+      "sha256": "6c92c6ed2a0700f036da4bdf55e56636b91c82ac661302a65c4fc24a03f9cda3",
+      "size": 180976
     },
     {
       "id": "plugin-companion",
