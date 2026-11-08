@@ -1,0 +1,57 @@
+{
+  "schema": 2,
+  "items": [
+    {
+      "id": "theme-190x4",
+      "kind": "theme",
+      "name": "190x4",
+      "title": "190x4",
+      "file": "190x4.theme.css",
+      "version": "4.4.0",
+      "url": "https://github.com/pathetixx/190x4-bd-theme/releases/download/theme-v4.4.0/190x4.theme.css",
+      "sha256": "3e7bd8698b87bfccd6a8073d62186d51eb96c16c5ac800e63ffb2efb80a383dd",
+      "size": 197266
+    },
+    {
+      "id": "theme-eclipse",
+      "kind": "theme",
+      "name": "190x4 Eclipse",
+      "title": "Затмение",
+      "file": "190x4-Eclipse.theme.css",
+      "version": "1.0.0",
+      "url": "https://github.com/pathetixx/190x4-bd-theme/releases/download/theme-v4.4.0/190x4-Eclipse.theme.css",
+      "sha256": "e7019c98eebcb19a0631d29d1d091d3469f77a638b6a87d0ef00ad428ddcebab",
+      "size": 884367
+    },
+    {
+      "id": "plugin-companion",
+      "kind": "plugin",
+      "name": "190x4Companion",
+      "file": "190x4Companion.plugin.js",
+      "version": "2.6.0",
+      "url": "https://github.com/pathetixx/190x4-bd-theme/releases/download/theme-v4.3.0/190x4Companion.plugin.js",
+      "sha256": "8f7988600cd6f9c8af1c79ff329abe2eb45455b911055379dafc91721266e05c",
+      "size": 39525
+    },
+    {
+      "id": "plugin-regionswitcher",
+      "kind": "plugin",
+      "name": "RegionSwitcher",
+      "file": "RegionSwitcher.plugin.js",
+      "version": "4.2.1",
+      "url": "https://raw.githubusercontent.com/pathetixx/190x4-regionswitcher/687ceb16e7c1de209134a3d3a77c4d7cd977209d/RegionSwitcher.plugin.js",
+      "sha256": "d8bdee623a46d87cd590fc34db3867a5e6d6a969432e87712bfbc4d76fc1cfcf",
+      "size": 43766
+    },
+    {
+      "id": "plugin-showping",
+      "kind": "plugin",
+      "name": "ShowPing",
+      "file": "ShowPing.plugin.js",
+      "version": "2.6.13-190x4.1",
+      "url": "https://raw.githubusercontent.com/pathetixx/190x4-discord-kit/main/vendor/ShowPing/ShowPing.plugin.js",
+      "sha256": "e3f6acc881afd258c69df4ea0315d89327e8c48e66343f8062b46bae182f7025",
+      "size": 9078
+    }
+  ]
+}

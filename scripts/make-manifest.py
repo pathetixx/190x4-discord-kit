@@ -9,8 +9,8 @@ import hashlib, json, pathlib, urllib.request
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 ITEMS = [
-    dict(id="theme-190x4", kind="theme", name="190x4", title="190x4", file="190x4.theme.css", version="4.3.0",
-         url="https://github.com/pathetixx/190x4-bd-theme/releases/download/theme-v4.3.0/190x4.theme.css"),
+    dict(id="theme-190x4", kind="theme", name="190x4", title="190x4", file="190x4.theme.css", version="4.4.0",
+         url="https://github.com/pathetixx/190x4-bd-theme/releases/download/theme-v4.4.0/190x4.theme.css"),
     dict(id="theme-eclipse", kind="theme", name="190x4 Eclipse", title="Затмение", file="190x4-Eclipse.theme.css", version="1.0.0",
          url="https://github.com/pathetixx/190x4-bd-theme/releases/download/theme-v4.4.0/190x4-Eclipse.theme.css"),
     dict(id="plugin-companion", kind="plugin", name="190x4Companion", file="190x4Companion.plugin.js", version="2.6.0",
