@@ -6,9 +6,9 @@
       "kind": "theme",
       "name": "190x4",
       "file": "190x4.theme.css",
-      "version": "4.4.0",
-      "url": "https://github.com/pathetixx/190x4-bd-theme/releases/download/theme-v4.4.0/190x4.theme.css",
-      "sha256": "3e7bd8698b87bfccd6a8073d62186d51eb96c16c5ac800e63ffb2efb80a383dd",
+      "version": "4.4.1",
+      "url": "https://github.com/pathetixx/190x4-bd-theme/releases/download/theme-v4.4.1/190x4.theme.css",
+      "sha256": "176379a5b834c6a67e829117192d27f8aa13a37f26bdafba8a5769375e784657",
       "size": 197266
     },
     {
@@ -16,10 +16,10 @@
       "kind": "plugin",
       "name": "190x4Companion",
       "file": "190x4Companion.plugin.js",
-      "version": "2.6.0",
-      "url": "https://github.com/pathetixx/190x4-bd-theme/releases/download/theme-v4.3.0/190x4Companion.plugin.js",
-      "sha256": "8f7988600cd6f9c8af1c79ff329abe2eb45455b911055379dafc91721266e05c",
-      "size": 39525
+      "version": "2.7.0",
+      "url": "https://github.com/pathetixx/190x4-bd-theme/releases/download/theme-v4.4.1/190x4Companion.plugin.js",
+      "sha256": "88a587974f76f4181d713b5cc51487b3c023f2a623dc32e33bcf64f76ecf8f66",
+      "size": 40345
     },
     {
       "id": "plugin-regionswitcher",
