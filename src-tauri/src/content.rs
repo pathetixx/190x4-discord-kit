@@ -6,9 +6,11 @@ use reqwest::blocking::Client;
 use serde::{Deserialize, Serialize};
 use std::path::PathBuf;
 
+/// Отдельный файл: content/manifest.json читают уже установленные Kit < 0.2,
+/// они поставили бы вторую тему и не умеют выбирать между темами.
 const MANIFEST_URLS: [&str; 2] = [
-    "https://raw.githubusercontent.com/pathetixx/190x4-discord-kit/main/content/manifest.json",
-    "https://cdn.jsdelivr.net/gh/pathetixx/190x4-discord-kit@main/content/manifest.json",
+    "https://raw.githubusercontent.com/pathetixx/190x4-discord-kit/main/content/manifest2.json",
+    "https://cdn.jsdelivr.net/gh/pathetixx/190x4-discord-kit@main/content/manifest2.json",
 ];
 
 #[derive(Deserialize, Serialize, Clone)]
@@ -21,6 +23,9 @@ pub struct Item {
     pub version: String,
     pub url: String,
     pub sha256: String,
+    /// подпись темы в окне Kit
+    #[serde(default)]
+    pub title: Option<String>,
 }
 
 #[derive(Deserialize)]
@@ -33,6 +38,7 @@ pub struct Manifest {
 pub struct ItemStatus {
     pub id: String,
     pub name: String,
+    pub title: String,
     pub kind: String,
     pub version: Option<String>,
     pub present: bool,
@@ -46,7 +52,7 @@ pub fn fetch_manifest(client: &Client) -> Result<Manifest, String> {
             .and_then(|r| r.error_for_status())
             .and_then(|r| r.json::<Manifest>());
         if let Ok(m) = got {
-            if m.schema == 1 {
+            if m.schema == 2 {
                 return Ok(m);
             }
         }
@@ -98,6 +104,21 @@ fn enable(item: &Item) {
     } else {
         "plugins.json"
     };
+    set_enabled(file, &[(item.name.clone(), true)]);
+}
+
+/// Включает выбранную тему комплекта и выключает остальные его темы.
+fn activate_theme(manifest: &Manifest, id: &str) {
+    let changes: Vec<(String, bool)> = manifest
+        .items
+        .iter()
+        .filter(|i| i.kind == "theme")
+        .map(|i| (i.name.clone(), i.id == id))
+        .collect();
+    set_enabled("themes.json", &changes);
+}
+
+fn set_enabled(file: &str, changes: &[(String, bool)]) {
     let mut channels: Vec<&str> = discord::present().iter().map(|f| f.channel).collect();
     if channels.is_empty() {
         channels.push("stable");
@@ -108,7 +129,9 @@ fn enable(item: &Item) {
             .ok()
             .and_then(|b| serde_json::from_slice(&b).ok())
             .unwrap_or_default();
-        map.insert(item.name.clone(), serde_json::Value::Bool(true));
+        for (name, on) in changes {
+            map.insert(name.clone(), serde_json::Value::Bool(*on));
+        }
         if let Ok(bytes) = serde_json::to_vec_pretty(&map) {
             let _ = util::write_atomic(&path, &bytes);
         }
@@ -128,12 +151,45 @@ pub fn sync(client: &Client, state: &mut State, enable_new: bool) -> Result<Vec<
         }
         state.installed.insert(item.id.clone(), item.version.clone());
         if enable_new && !state.enabled_once.contains(&item.id) {
-            enable(item);
+            if item.kind != "theme" {
+                enable(item);
+            }
             state.enabled_once.push(item.id.clone());
+        }
+    }
+    if enable_new {
+        let themes = || manifest.items.iter().filter(|i| i.kind == "theme");
+        let chosen = state
+            .selected_theme
+            .clone()
+            .filter(|id| themes().any(|i| &i.id == id))
+            .or_else(|| themes().next().map(|i| i.id.clone()));
+        if let Some(id) = chosen {
+            activate_theme(&manifest, &id);
+            state.selected_theme = Some(id);
         }
     }
     let _ = state.save();
     Ok(updated)
+}
+
+/// Делает тему `id` активной: докачивает её файл, если нужно, и переключает BD.
+pub fn select_theme(client: &Client, state: &mut State, id: &str) -> Result<(), String> {
+    let manifest = fetch_manifest(client)?;
+    let item = manifest
+        .items
+        .iter()
+        .find(|i| i.kind == "theme" && i.id == id)
+        .ok_or_else(|| "такой темы нет в комплекте".to_string())?;
+    if needs_update(item) {
+        install_item(client, item)?;
+    }
+    state.installed.insert(item.id.clone(), item.version.clone());
+    activate_theme(&manifest, &item.id);
+    state.selected_theme = Some(item.id.clone());
+    state
+        .save()
+        .map_err(|e| format!("не удалось сохранить выбор темы: {e}"))
 }
 
 /// Что из комплекта стоит сейчас (по манифесту, если он доступен).
@@ -147,6 +203,7 @@ pub fn status(client: &Client, state: &State) -> Vec<ItemStatus> {
         .map(|item| ItemStatus {
             id: item.id.clone(),
             name: item.name.clone(),
+            title: item.title.clone().unwrap_or_else(|| item.name.clone()),
             kind: item.kind.clone(),
             version: state.installed.get(&item.id).cloned(),
             present: target(item).map(|p| p.is_file()).unwrap_or(false),

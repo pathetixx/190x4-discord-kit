@@ -138,6 +138,32 @@ pub fn uninstall_all(app: &AppHandle) -> Result<(), String> {
     Ok(())
 }
 
+/// Переключает тему; BD подхватывает её только после полного перезапуска Discord.
+pub fn apply_theme(app: &AppHandle, id: &str) -> Result<(), String> {
+    let client = net::client();
+    let mut state = State::load();
+    step(app, "theme", "Переключаю тему", || {
+        content::select_theme(&client, &mut state, id)
+    })?;
+    let running: Vec<_> = discord::present()
+        .into_iter()
+        .filter(|f| crate::util::is_running(f.exe))
+        .collect();
+    if !running.is_empty() {
+        step(app, "launch", "Перезапускаю Discord", || {
+            for f in &running {
+                discord::close(f);
+            }
+            std::thread::sleep(std::time::Duration::from_millis(1500));
+            for f in running {
+                discord::start(f);
+            }
+            Ok(())
+        })?;
+    }
+    Ok(())
+}
+
 pub fn restart_discord() {
     let flavors = discord::present();
     let running: Vec<_> = flavors

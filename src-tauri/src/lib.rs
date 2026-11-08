@@ -16,7 +16,7 @@ mod state;
 mod util;
 
 use serde::Serialize;
-use tauri::{AppHandle, Manager};
+use tauri::{AppHandle, Emitter, Manager};
 use tauri_plugin_updater::UpdaterExt;
 
 #[derive(Serialize)]
@@ -26,6 +26,7 @@ struct Status {
     bd_installed: bool,
     bd_version: Option<String>,
     content: Vec<content::ItemStatus>,
+    selected_theme: Option<String>,
     guard: bool,
 }
 
@@ -33,6 +34,12 @@ struct Status {
 struct AppUpdate {
     version: String,
     notes: Option<String>,
+}
+
+#[derive(Serialize, Clone)]
+struct UpdateProgress {
+    received: u64,
+    total: Option<u64>,
 }
 
 async fn blocking<T: Send + 'static>(f: impl FnOnce() -> Result<T, String> + Send + 'static) -> Result<T, String> {
@@ -53,6 +60,7 @@ async fn get_status(app: AppHandle) -> Result<Status, String> {
             bd_installed: bd::installed(),
             bd_version: state.bd_version.clone(),
             content: content::status(&client, &state),
+            selected_theme: state.selected_theme.clone(),
             guard: autostart::is_enabled(),
         })
     })
@@ -67,6 +75,21 @@ async fn install_all(app: AppHandle) -> Result<(), String> {
 #[tauri::command]
 async fn uninstall_all(app: AppHandle) -> Result<(), String> {
     blocking(move || installer::uninstall_all(&app)).await
+}
+
+#[tauri::command]
+async fn apply_theme(app: AppHandle, id: String) -> Result<(), String> {
+    blocking(move || installer::apply_theme(&app, &id)).await
+}
+
+/// Ручная проверка темы и плагинов; возвращает имена обновлённых элементов.
+#[tauri::command]
+async fn sync_content() -> Result<Vec<String>, String> {
+    blocking(|| {
+        let mut state = state::State::load();
+        content::sync(&net::client(), &mut state, false)
+    })
+    .await
 }
 
 #[tauri::command]
@@ -93,8 +116,16 @@ async fn check_app_update(app: AppHandle) -> Result<Option<AppUpdate>, String> {
 async fn install_app_update(app: AppHandle) -> Result<(), String> {
     let updater = app.updater().map_err(|e| e.to_string())?;
     if let Some(update) = updater.check().await.map_err(|e| e.to_string())? {
+        let events = app.clone();
+        let mut received = 0u64;
         update
-            .download_and_install(|_, _| {}, || {})
+            .download_and_install(
+                move |chunk, total| {
+                    received += chunk as u64;
+                    let _ = events.emit("kit-update", UpdateProgress { received, total });
+                },
+                || {},
+            )
             .await
             .map_err(|e| e.to_string())?;
         app.restart();
@@ -134,6 +165,8 @@ pub fn run() {
             get_status,
             install_all,
             uninstall_all,
+            apply_theme,
+            sync_content,
             restart_discord,
             check_app_update,
             install_app_update
@@ -148,7 +181,7 @@ pub fn run() {
             } else {
                 tauri::WebviewWindowBuilder::new(app, "main", tauri::WebviewUrl::App("index.html".into()))
                     .title("190x4 Discord Kit")
-                    .inner_size(900.0, 600.0)
+                    .inner_size(1000.0, 640.0)
                     .resizable(false)
                     .decorations(false)
                     .center()

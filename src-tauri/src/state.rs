@@ -20,6 +20,9 @@ pub struct State {
     pub content_pending_since: u64,
     #[serde(default)]
     pub last_self_update: u64,
+    /// id выбранной темы комплекта; пусто — первая тема манифеста
+    #[serde(default)]
+    pub selected_theme: Option<String>,
 }
 
 impl State {

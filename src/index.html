@@ -9,46 +9,81 @@
 <body>
   <header class="titlebar" data-tauri-drag-region>
     <div class="brand" data-tauri-drag-region>
-      <span class="mark"><b>190</b><i>x4</i></span>
-      <span class="brand-name" data-tauri-drag-region>DISCORD KIT</span>
+      <img class="mark" src="img/enso.webp" alt="" data-tauri-drag-region>
+      <span data-tauri-drag-region>190x4 Discord Kit</span>
     </div>
     <div class="winbtns">
-      <button id="btn-min" class="winbtn" title="Свернуть" aria-label="Свернуть"><span class="ico ico-min"></span></button>
-      <button id="btn-close" class="winbtn close" title="Закрыть" aria-label="Закрыть"><span class="ico ico-close"></span></button>
+      <button id="btn-min" class="winbtn" title="Свернуть" aria-label="Свернуть"><span class="ico" style="--i:url(img/ico/win-min.png)"></span></button>
+      <button id="btn-close" class="winbtn close" title="Закрыть" aria-label="Закрыть"><span class="ico" style="--i:url(img/ico/win-close.png)"></span></button>
     </div>
   </header>
 
-  <main class="layout">
-    <section class="island hero">
-      <p class="prompt">&gt; комплект_190x4</p>
-      <h1>Discord в стиле 190x4 —<br>в один клик</h1>
-      <p class="lead">BetterDiscord, тема 190x4 и плагины ставятся вместе и не слетают после обновлений Discord.</p>
+  <div class="frame">
+    <nav class="nav">
+      <button class="nav-item active" data-page="home"><span class="ico" style="--i:url(img/ico/home.png)"></span>Главная</button>
+      <button class="nav-item" data-page="themes"><span class="ico" style="--i:url(img/ico/palette.png)"></span>Темы</button>
+      <button class="nav-item" data-page="plugins"><span class="ico" style="--i:url(img/ico/puzzle.png)"></span>Плагины</button>
+      <button class="nav-item" data-page="guard"><span class="ico" style="--i:url(img/ico/shield.png)"></span>Защита</button>
+      <button class="nav-item" data-page="settings"><span class="ico" style="--i:url(img/ico/gear.png)"></span>Настройки</button>
+    </nav>
 
-      <ul class="parts" id="parts">
-        <li data-part="discord"><span class="dot"></span><span class="pname">Discord</span><span class="pstate">проверяю…</span></li>
-        <li data-part="bd"><span class="dot"></span><span class="pname">BetterDiscord</span><span class="pstate">—</span></li>
-        <li data-part="theme"><span class="dot"></span><span class="pname">Тема 190x4</span><span class="pstate">—</span></li>
-        <li data-part="plugins"><span class="dot"></span><span class="pname">Плагины</span><span class="pstate">—</span></li>
-        <li data-part="guard"><span class="dot"></span><span class="pname">Защита от обновлений Discord</span><span class="pstate">—</span></li>
-      </ul>
-    </section>
+    <main class="pages">
+      <section class="page active" id="page-home">
+        <img class="title" src="img/title-home.webp" alt="Главная">
+        <div class="home">
+          <ul class="parts" id="parts">
+            <li data-part="discord"><span class="dot"></span><span class="pname">Discord</span><span class="pstate">проверяю…</span></li>
+            <li data-part="bd"><span class="dot"></span><span class="pname">BetterDiscord</span><span class="pstate">—</span></li>
+            <li data-part="theme"><span class="dot"></span><span class="pname">Тема</span><span class="pstate">—</span></li>
+            <li data-part="plugins"><span class="dot"></span><span class="pname">Плагины</span><span class="pstate">—</span></li>
+            <li data-part="guard"><span class="dot"></span><span class="pname">Защита от обновлений Discord</span><span class="pstate">—</span></li>
+          </ul>
+          <div class="actions">
+            <button id="btn-install" class="brush" disabled>УСТАНОВИТЬ ВСЁ</button>
+            <p class="hint" id="install-hint">Discord закроется и запустится заново.</p>
+            <div class="term" id="term" aria-live="polite"><div class="term-line muted">готов к работе</div></div>
+          </div>
+        </div>
+      </section>
 
-    <section class="island side">
-      <button id="btn-install" class="primary" disabled>УСТАНОВИТЬ ВСЁ</button>
-      <p class="hint" id="install-hint">Discord закроется и запустится заново.</p>
-      <button id="btn-restart" class="secondary">Перезапустить Discord</button>
+      <section class="page" id="page-themes">
+        <img class="title" src="img/title-themes.webp" alt="Темы">
+        <div class="themes" id="themes"></div>
+        <div class="themes-foot">
+          <button id="btn-theme" class="brush" disabled>ПРИМЕНИТЬ ТЕМУ</button>
+          <p class="hint" id="theme-hint">Discord перезапустится, чтобы подхватить тему.</p>
+        </div>
+      </section>
 
-      <div class="term" id="term" aria-live="polite">
-        <div class="term-line muted">&gt; готов к работе</div>
-      </div>
+      <section class="page" id="page-plugins">
+        <img class="title" src="img/title-plugins.webp" alt="Плагины">
+        <ul class="rows" id="plugins"></ul>
+      </section>
 
-      <button id="btn-uninstall" class="danger-link">Удалить комплект</button>
-    </section>
-  </main>
+      <section class="page" id="page-guard">
+        <img class="title" src="img/title-guard.webp" alt="Защита">
+        <div class="plain">
+          <p class="lead" id="guard-state">Проверяю…</p>
+          <p>Discord при обновлении снимает BetterDiscord. Защита работает в фоне без окна: возвращает его сама и раз в несколько часов проверяет новые версии темы и плагинов.</p>
+        </div>
+      </section>
 
-  <footer class="footer">
+      <section class="page" id="page-settings">
+        <img class="title" src="img/title-settings.webp" alt="Настройки">
+        <div class="plain">
+          <button id="btn-restart" class="outline">Перезапустить Discord</button>
+          <button id="btn-uninstall" class="danger-link">Удалить комплект</button>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <footer class="update">
     <span id="ver" class="ver">v—</span>
-    <span id="update" class="update"></span>
+    <span id="update-text" class="update-text">Проверяю обновления…</span>
+    <div class="bar" id="bar" hidden><div class="bar-fill" id="bar-fill"></div></div>
+    <span id="update-size" class="update-size" hidden></span>
+    <button id="btn-update" class="outline">Проверить обновления</button>
   </footer>
 
   <script src="app.js"></script>
