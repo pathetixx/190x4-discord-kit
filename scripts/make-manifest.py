@@ -17,7 +17,7 @@ ITEMS = [
          url="https://github.com/pathetixx/190x4-bd-theme/releases/download/theme-v4.4.1/190x4Companion.plugin.js"),
     dict(id="plugin-regionswitcher", kind="plugin", name="RegionSwitcher", file="RegionSwitcher.plugin.js", version="4.2.1",
          url="https://raw.githubusercontent.com/pathetixx/190x4-regionswitcher/687ceb16e7c1de209134a3d3a77c4d7cd977209d/RegionSwitcher.plugin.js"),
-    dict(id="plugin-showping", kind="plugin", name="ShowPing", file="ShowPing.plugin.js", version="2.6.13-190x4.1",
+    dict(id="plugin-showping", kind="plugin", name="ShowPing", file="ShowPing.plugin.js", version="2.6.13-190x4.2",
          url="https://raw.githubusercontent.com/pathetixx/190x4-discord-kit/main/vendor/ShowPing/ShowPing.plugin.js"),
 ]
 

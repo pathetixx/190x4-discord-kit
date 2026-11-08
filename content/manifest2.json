@@ -48,10 +48,10 @@
       "kind": "plugin",
       "name": "ShowPing",
       "file": "ShowPing.plugin.js",
-      "version": "2.6.13-190x4.1",
+      "version": "2.6.13-190x4.2",
       "url": "https://raw.githubusercontent.com/pathetixx/190x4-discord-kit/main/vendor/ShowPing/ShowPing.plugin.js",
-      "sha256": "e3f6acc881afd258c69df4ea0315d89327e8c48e66343f8062b46bae182f7025",
-      "size": 9078
+      "sha256": "99bb582d32607cc1fd3903e809bf86e231e7d3edf0ce8d8a75f28e5b1bbd529f",
+      "size": 9527
     }
   ]
 }

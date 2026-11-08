@@ -136,7 +136,10 @@ module.exports = class ShowPing {
     wrapLabelType(originalType) {
         let wrapped = wrappedTypes.get(originalType);
         if (!wrapped) {
+            // Классовый компонент нельзя вызвать как функцию: React падает на всё приложение.
+            const isClass = originalType.prototype?.isReactComponent || /^class\b/.test(Function.prototype.toString.call(originalType));
             wrapped = (props) => {
+                if (isClass) return React.createElement(React.Fragment, null, React.createElement(originalType, props), React.createElement(PingElement));
                 const rendered = originalType(props);
                 if (rendered?.props) rendered.props.children = [rendered.props.children, React.createElement(PingElement)];
                 return rendered;
