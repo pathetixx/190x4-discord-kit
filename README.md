@@ -6,7 +6,7 @@ Discord в стиле 190x4 в один клик: BetterDiscord, тема 190x4 
 
 - **BetterDiscord** — официальный `betterdiscord.asar` с [GitHub BetterDiscord](https://github.com/BetterDiscord/BetterDiscord/releases), подключается к Discord так же, как их установщик.
 - **Тема [190x4](https://github.com/pathetixx/190x4-bd-theme)** и плагины: **190x4Companion**, **[RegionSwitcher](https://github.com/pathetixx/190x4-regionswitcher)**, **ShowPing** (исправленная копия, см. `vendor/ShowPing`). Всё сразу включается.
-- **Защиту от обновлений Discord** — фоновый сторож без окна стартует вместе с Windows: обновление Discord стирает подключение BetterDiscord, сторож возвращает его за секунды.
+- **Защиту от обновлений Discord** — фоновый сторож без окна стартует вместе с Windows: обновление Discord стирает подключение BetterDiscord, сторож возвращает его за секунды. Новую сборку BetterDiscord он ставит сам, когда Discord закрыт.
 
 Работает со Stable, PTB и Canary. Права администратора не нужны.
 

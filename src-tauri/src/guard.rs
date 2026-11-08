@@ -4,6 +4,7 @@
 //! • раз в 6 ч сверяет комплект с манифестом и тихо обновляет тему/плагины
 //!   (пока Discord открыт — ждёт, чтобы BD не терял тему на лету; после
 //!   3 суток ожидания обновляет всё равно и просит перезапустить Discord);
+//!   ядро BD сверяет и заменяет только при закрытом Discord;
 //! • раз в сутки запускает `--self-update` — OTA самого Kit.
 //! Выходит сам, если автозапуск выключили (удаление комплекта).
 
@@ -66,6 +67,13 @@ pub fn run() {
                 }
             } else {
                 let running = discord::any_running();
+                if !running {
+                    if let Ok(Some(tag)) = bd::update_asar(&client) {
+                        state.bd_version = Some(tag);
+                        let _ = state.save();
+                        toast("BetterDiscord обновлён.");
+                    }
+                }
                 match content::sync(&client, &mut state, false) {
                     Ok(updated) => {
                         state.last_content_check = now;
