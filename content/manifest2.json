@@ -7,10 +7,10 @@
       "name": "190x4",
       "title": "190x4",
       "file": "190x4.theme.css",
-      "version": "4.5.0",
-      "url": "https://github.com/pathetixx/190x4-bd-theme/releases/download/theme-v4.5.0/190x4.theme.css",
-      "sha256": "a412059c0b1121dfde02eab61f330a64a376c91ef14352b4acf9e3e03b10b659",
-      "size": 197266
+      "version": "4.6.0",
+      "url": "https://github.com/pathetixx/190x4-bd-theme/releases/download/theme-v4.6.0/190x4.theme.css",
+      "sha256": "dcb0d7ca7b76a8d86cac1965fe0e7732f2c7a97c63a66a2eed0e6e4eed4793a7",
+      "size": 196980
     },
     {
       "id": "theme-eclipse",
@@ -18,20 +18,20 @@
       "name": "190x4 Eclipse",
       "title": "Затмение",
       "file": "190x4-Eclipse.theme.css",
-      "version": "1.1.0",
-      "url": "https://github.com/pathetixx/190x4-bd-theme/releases/download/theme-v4.5.0/190x4-Eclipse.theme.css",
-      "sha256": "0ed7758532c73ea9d043c8f25fe1b97fe3d65d3f4620e9fe33b4b1e1bf53e7a7",
-      "size": 904228
+      "version": "1.2.0",
+      "url": "https://github.com/pathetixx/190x4-bd-theme/releases/download/theme-v4.6.0/190x4-Eclipse.theme.css",
+      "sha256": "4122a46e5f74b13de6f583212ea3ace51663fb63f7c18746c0f420b987c82658",
+      "size": 904334
     },
     {
       "id": "plugin-companion",
       "kind": "plugin",
       "name": "190x4Companion",
       "file": "190x4Companion.plugin.js",
-      "version": "2.8.0",
-      "url": "https://github.com/pathetixx/190x4-bd-theme/releases/download/theme-v4.5.0/190x4Companion.plugin.js",
-      "sha256": "973f541def69321e8caf6363d917cad1273d230656d7611d230a9abea9348816",
-      "size": 43409
+      "version": "2.9.0",
+      "url": "https://github.com/pathetixx/190x4-bd-theme/releases/download/theme-v4.6.0/190x4Companion.plugin.js",
+      "sha256": "48a3649bc89b5c0399d9bf3963b18568938da54245d098d7e2cdb8fa33d40e6b",
+      "size": 56057
     },
     {
       "id": "plugin-regionswitcher",
