@@ -1,6 +1,6 @@
 [package]
 name = "discord-kit"
-version = "0.2.0"
+version = "0.2.1"
 description = "190x4 Discord Kit — BetterDiscord + 190x4 theme and plugins in one click"
 authors = ["pathetixx"]
 edition = "2021"
