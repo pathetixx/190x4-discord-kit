@@ -138,6 +138,33 @@ fn set_enabled(file: &str, changes: &[(String, bool)]) {
     }
 }
 
+/// Компаньон держит тему и плагины комплекта включёнными, но себя после
+/// сбоя или замены файла BD мог оставить выключенным. Пока Discord закрыт,
+/// возвращаем ему `true` в plugins.json — если его не выключали руками
+/// (эту пометку компаньон пишет в свой 190x4Companion.config.json).
+pub fn keep_companion_enabled() {
+    const NAME: &str = "190x4Companion";
+    let config = paths::bd_plugins().join(format!("{NAME}.config.json"));
+    let user_off = std::fs::read(&config)
+        .ok()
+        .and_then(|b| serde_json::from_slice::<serde_json::Value>(&b).ok())
+        .and_then(|v| v.get("userDisabled").and_then(|x| x.as_bool()))
+        .unwrap_or(false);
+    if user_off || !paths::bd_plugins().join(format!("{NAME}.plugin.js")).is_file() {
+        return;
+    }
+    let off = discord::present().iter().any(|f| {
+        std::fs::read(paths::bd_channel(f.channel).join("plugins.json"))
+            .ok()
+            .and_then(|b| serde_json::from_slice::<serde_json::Value>(&b).ok())
+            .and_then(|v| v.get(NAME).and_then(|x| x.as_bool()))
+            == Some(false)
+    });
+    if off {
+        set_enabled("plugins.json", &[(NAME.to_string(), true)]);
+    }
+}
+
 /// Ставит/обновляет всё, что расходится с манифестом. `enable_new` — при
 /// первой установке включить аддоны (дальше выбор юзера в BD не трогаем).
 /// Возвращает имена обновлённых элементов.
