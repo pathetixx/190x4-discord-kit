@@ -6,9 +6,9 @@
       "kind": "theme",
       "name": "190x4",
       "file": "190x4.theme.css",
-      "version": "4.6.1",
-      "url": "https://github.com/pathetixx/190x4-bd-theme/releases/download/theme-v4.6.1/190x4.theme.css",
-      "sha256": "8e54f0d4547a113a44d6ad1223aa7efeb60a640c8d4d61c208b8a88d8d5047af",
+      "version": "4.6.2",
+      "url": "https://github.com/pathetixx/190x4-bd-theme/releases/download/theme-v4.6.2/190x4.theme.css",
+      "sha256": "1d5ccd1714fb483c8121aff014e906d417ae0d82732a7dc5918df4ef7ff169cd",
       "size": 196980
     },
     {
@@ -17,7 +17,7 @@
       "name": "190x4Companion",
       "file": "190x4Companion.plugin.js",
       "version": "2.9.0",
-      "url": "https://github.com/pathetixx/190x4-bd-theme/releases/download/theme-v4.6.1/190x4Companion.plugin.js",
+      "url": "https://github.com/pathetixx/190x4-bd-theme/releases/download/theme-v4.6.2/190x4Companion.plugin.js",
       "sha256": "48a3649bc89b5c0399d9bf3963b18568938da54245d098d7e2cdb8fa33d40e6b",
       "size": 56057
     },
